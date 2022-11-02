@@ -1,0 +1,21 @@
+#!/usr/local/bin/python3
+from intra import ic
+
+with open("monkeys") as file:
+    user_out = file.read().replace('\n', ',')
+payload = {
+        "filter[login]": user_out
+}
+
+response = ic.pages_threaded("users", params=payload)
+
+print("\033c-----------\033[32mCONNECTED\033[0m-----------")
+for user in response:
+    if user['location'] != None:
+        print(f"  - {user['login']} loged in {user['location']}")
+
+print("\n---------\033[31mNOT CONNECTED\033[0m---------")
+for user in response:
+    if user['location'] == None:
+        print(f"  - {user['login']}")
+print("\n")
