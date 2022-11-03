@@ -7,4 +7,6 @@ and then creating adding all the information to the config.yml file.
 Then add all the login of your "monkey friends" to the monkeys files(one per line)
 
 You can easely doing executing:
-  echo "login" >> monkeys
+```bash
+echo "login" >> monkeys
+```
