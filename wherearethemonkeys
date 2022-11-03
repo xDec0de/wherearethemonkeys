@@ -7,15 +7,18 @@ payload = {
         "filter[login]": user_out
 }
 
-response = ic.pages_threaded("users", params=payload)
+if not ic.client_id or not ic.client_secret:
+    print("\033c------\033[31mERROR\033[0m-------\nPlease edit your config.yml file and add your user id and secret id")
+else:
+    response = ic.pages_threaded("users", params=payload)
 
-print("\033c-----------\033[32mCONNECTED\033[0m-----------")
-for user in response:
-    if user['location'] != None:
-        print(f"  - {user['login']} loged in {user['location']}")
+    print("\033c-----------\033[32mCONNECTED\033[0m-----------")
+    for user in response:
+        if user['location'] != None:
+            print(f"  - {user['login']} loged in {user['location']}")
 
-print("\n---------\033[31mNOT CONNECTED\033[0m---------")
-for user in response:
-    if user['location'] == None:
-        print(f"  - {user['login']}")
-print("\n")
+    print("\n---------\033[31mNOT CONNECTED\033[0m---------")
+    for user in response:
+        if user['location'] == None:
+            print(f"  - {user['login']}")
+    print("\n")
