@@ -4,7 +4,8 @@
 Using the 42 api you can search where are your friens at. 
 First you need to create an app on the intra (you need your UID and Secret ID) 
 and then creating adding all the information to the config.yml file.
-Then add all the login of your "monkey friends" to the monkeys files(one per line)
+
+Then add all the login of your _"monkey friends"_ to the monkeys files(one per line)
 
 You can easely doing executing:
 ```bash
