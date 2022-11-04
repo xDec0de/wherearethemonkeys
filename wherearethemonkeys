@@ -1,24 +1,37 @@
 #!/usr/local/bin/python3
 from intra import ic
+import sys
 
-with open("monkeys") as file:
-    user_out = file.read().replace('\n', ',')
-payload = {
-        "filter[login]": user_out
-}
-
-if not ic.client_id or not ic.client_secret:
-    print("\033c------\033[31mERROR\033[0m-------\nPlease edit your config.yml file and add your user id and secret id")
+args = sys.argv
+argLength = len(args)
+if argLength >= 2:
+	mode = args[1].lower()
+	if mode == 'add':
+		if argLength == 3:
+			monkeys = open("monkeys", "a")
+			monkeys.write(args[2] + "\n")
+			monkeys.close()
+		else:
+			print("Invalid usage for 'add': Login not found.")
 else:
-    response = ic.pages_threaded("users", params=payload)
+	with open("monkeys") as file:
+		user_out = file.read().replace('\n', ',')
+	payload = {
+		"filter[login]": user_out
+	}
 
-    print("\033c-----------\033[32mCONNECTED\033[0m-----------")
-    for user in response:
-        if user['location'] != None:
-            print(f"  - {user['login']} loged in {user['location']}")
+	if not ic.client_id or not ic.client_secret:
+		print("\033c------\033[31mERROR\033[0m-------\nPlease edit your config.yml file and add your user id and secret id")
+	else:
+		response = ic.pages_threaded("users", params=payload)
 
-    print("\n---------\033[31mNOT CONNECTED\033[0m---------")
-    for user in response:
-        if user['location'] == None:
-            print(f"  - {user['login']}")
-    print("\n")
+	print("\033c-----------\033[32mCONNECTED\033[0m-----------")
+	for user in response:
+		if user['location'] != None:
+			print(f"  - {user['login']} logged in {user['location']}")
+
+	print("\n---------\033[31mNOT CONNECTED\033[0m---------")
+	for user in response:
+		if user['location'] == None:
+			print(f"  - {user['login']}")
+	print("\n")
